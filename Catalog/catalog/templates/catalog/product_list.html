@@ -1,0 +1,89 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KBstore</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar" id="main-navbar">
+        <div class="nav-left">
+            <img src="{% static 'images/logo.png' %}" alt="Логотип">
+            <h1 class="site-name">KBstore
+            </h1>
+        </div>
+        <div class="nav-right">
+            <form id="search-form" action="/catalog/search/" method="GET">
+                <input type="text" id="search-input" name="query" placeholder="поиск">
+                <button type="submit">Найти</button>
+            </form>
+        </div>
+    </nav>
+
+    <header class="header">
+        <img src="{% static 'images/KB.jpg' %}" alt="Header Background" class="header-background">
+        <div class="wholesale-text">Custom Keyboard store</div>
+        <div class="filters">
+            <div class="filter-group">
+                <label for="min-price">Min</label>
+                <input type="number" id="min-price" class="filter-item" value="0">
+            </div>
+            <div class="filter-group">
+                <label for="max-price">Max</label>
+                <input type="number" id="max-price" class="filter-item" value="1200">
+            </div>
+            <div class="filter-group" style="display: none;">
+                <label for="price-range">Filter</label>
+                <input type="range" id="price-range" class="filter-item" value="0">
+                <input type="range" id="price-range-max" class="filter-item" value="1200">
+                <span id="price-value" class="filter-item">$</span> - <span id="price-value-max" class="filter-item">$</span>
+            </div>
+            <div class="filter-group">
+                <label for="category-filter">Filter</label>
+                <select id="category-filter" class="filter-item">
+                    <option value="all">Category</option>
+                </select>
+            </div>
+        </div>
+    </header>
+    <main id="product-container">
+        <div class="product-list">
+            {% for product in products %}
+                <div class="product-card" data-name="{{ product.name }}" data-category="{{ product.category.name }}"  data-brand="{{ product.brand }}"  data-price="{{ product.price }}" data-image="{{ product.image.url }}">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.price|floatformat:2 }} $</p>
+                    <p>Категория: {{ product.category.name }}</p>
+                    <p>студия: {{ product.brand }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <div class="pagination">
+        <button id="first-page">&laquo;</button>
+        <button id="prev-page">&lsaquo;</button>
+        <span id="page-info"><span id="current-page">1</span> / <span id="total-pages">1</span></span>
+        <button id="next-page">&rsaquo;</button>
+        <button id="last-page">&raquo;</button>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="socials">
+                <p>Связаться с нами:</p>
+                <ul>
+                    <li><img src="{% static 'images/email.png' %}" alt="Email"><a href="gmail:ronkasc@gmail.com">ronkasc@gmail.com</a></li>
+                    <li><img src="{% static 'images/phone.png' %}" alt="Телефон">+8 800 35 35 </li>
+                    <li><img src="{% static 'images/Instagram.png' %}" alt="Instagram"><a href="https://www.instagram.com/ronkasc/">@Ronkasc</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/search.js' %}"></script>
+    <script src="{% static 'js/filter.js' %}"></script>
+    <script src="{% static 'js/return.js' %}"></script>
+</body>
+</html>
